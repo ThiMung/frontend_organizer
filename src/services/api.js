@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuthStore } from '../store/authStore';
 
 // Tạo một bản instance của axios
 const api = axios.create({
