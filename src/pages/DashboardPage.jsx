@@ -25,7 +25,7 @@ const DashboardPage = () => {
     const loadEvents = async () => {
       try {
         setIsLoading(true);
-        const response = await api.get('/events');
+        const response = await api.get('/organizer/events');
         setEvents(response.data.events || response.data || []);
       } catch (error) {
         setMessage(error.response?.data?.message || 'Unable to load your managed events.');

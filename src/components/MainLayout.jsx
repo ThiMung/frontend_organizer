@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { CalendarDays, LogOut, User } from 'lucide-react';
-import { authStore } from '../store/authStore';
+import { useAuthStore } from '../store/authStore';
 
 const MainLayout = () => {
   const navigate = useNavigate();
-  const user = authStore((state) => state.user);
-  const logout = authStore((state) => state.logout);
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
 
   const handleLogout = () => {
     logout();
-    navigate('/organizer/login'); // ĐÃ SỬA: Thêm /organizer/ vào trước
+    navigate('/'); // ĐÃ SỬA: Thêm /organizer/ vào trước
   };
 
   return (
@@ -27,10 +27,10 @@ const MainLayout = () => {
 
         {/* ĐÃ SỬA: Link menu có đầy đủ tiền tố /organizer/ */}
         <div className="flex items-center gap-8 text-sm">
-          <Link className="text-gray-600 hover:text-[#A02749]" to="/organizer/dashboard">
+          <Link className="text-gray-600 hover:text-[#A02749]" to="/dashboard">
             Browse Events
           </Link>
-          <Link className="border-b-2 border-[#A02749] pb-1 font-semibold text-[#A02749]" to="/organizer/dashboard">
+          <Link className="border-b-2 border-[#A02749] pb-1 font-semibold text-[#A02749]" to="/dashboard">
             My Dashboard
           </Link>
         </div>

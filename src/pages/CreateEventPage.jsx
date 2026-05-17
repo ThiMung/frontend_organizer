@@ -80,13 +80,13 @@ const CreateEventPage = () => {
       };
 
       // Gửi request lên endpoint lưu trữ sự kiện của Laravel
-      await api.post('/events', requestPayload);
+      await api.post('/organizer/events', requestPayload);
 
       toast.success('Event created successfully as a Draft!', { position: 'top-right' });
       
       // Chuyển hướng về trang danh sách quản lý của Organizer sau 1.5s
       setTimeout(() => {
-        navigate('/organizer/dashboard');
+        navigate('/dashboard');
       }, 1500);
 
     } catch (err) {
@@ -99,18 +99,6 @@ const CreateEventPage = () => {
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col">
       <Toaster />
-      
-      {/* 1. THANH NAVBAR PHÍA TRÊN ĐƯỢC GIỮ NGUYÊN (MẪU) */}
-      <nav className="w-full bg-white h-16 border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-50 shadow-sm">
-        <div className="flex items-center gap-3">
-          <span className="font-black text-xl text-indigo-600 tracking-tight">EventHub</span>
-          <span className="text-xs bg-slate-100 font-bold text-slate-500 px-2 py-0.5 rounded uppercase">Workspace</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-slate-600 font-medium">Hello, Organizer</span>
-          <div className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm">O</div>
-        </div>
-      </nav>
 
       {/* 2. PHẦN KHUNG FORM CHỨA NỘI DUNG TẠO SỰ KIỆN GIỐNG ẢNH MẪU */}
       <div className="flex-1 flex items-center justify-center p-6 md:p-12">

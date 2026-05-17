@@ -134,7 +134,7 @@ const LoginPage = () => {
 
           <footer className="mt-4 text-center text-sm text-stone-400">
             Don&apos;t have an account?{' '}
-            <Link className="font-medium text-[#A02749] hover:underline" to="/register">
+            <Link className="font-medium text-[#A02749] hover:underline" to="/organizer/register">
               Sign up
             </Link>
           </footer>

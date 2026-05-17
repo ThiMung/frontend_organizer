@@ -23,8 +23,8 @@ function App() {
 
         {/* 3. LAYOUT CHUNG: Giữ cố định Navbar phía trên cho Dashboard và Form tạo sự kiện */}
         <Route element={<MainLayout />}>
-          <Route path="/organizer/dashboard" element={<DashboardPage />} />
-          <Route path="/organizer/create-event" element={<CreateEventPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/create-event" element={<CreateEventPage />} />
         </Route>
 
         {/* 4. DỰ PHÒNG 404: Tránh việc màn hình bị trắng nếu lỡ gõ sai bất kỳ ký tự nào trên URL */}
