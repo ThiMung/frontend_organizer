@@ -1,16 +1,31 @@
-# React + Vite
+# Community Event Platform - Organizer Portal (Frontend Organizer)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ứng dụng quản trị và điều hành dành riêng cho **Ban tổ chức (Organizer)**. Ứng dụng chịu trách nhiệm khởi tạo sự kiện (Draft), phê duyệt xuất bản sự kiện (Publish), hủy bỏ sự kiện (Cancel) và giám sát danh sách người tham gia cùng thứ tự xếp vị trí danh sách chờ Waitlist thời gian thực.
 
-Currently, two official plugins are available:
+## 🛠️ Công Nghệ Sử Dụng
+- **Framework**: React.js (Bundled by **Vite**)
+- **State Management**: **Zustand** (Tích hợp Middleware `persist` lưu trữ trạng thái Dashboard của Organizer)
+- **API Client**: **Axios Instance** (Quản lý kết nối tập trung, chặn mã lỗi và đính kèm token tự động)
+- **Styling**: **Tailwind CSS** (Giao diện Mobile-First hỗ trợ Ban tổ chức theo dõi tiến độ sự kiện trực tiếp trên điện thoại thông minh)
+- **Routing**: **React Router** (Protected Routes chặn tuyệt đối tài khoản vai trò 'attendee' thâm nhập)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📁 Cấu Trúc Thư Mục Ứng Dụng
+```text
+frontend_organizer/
+├── src/
+│   ├── api/
+│   │   └── api.js              # Khởi tạo Axios Instance cấu hình Request/Response Interceptor
+│   ├── components/
+│   │   ├── Sidebar.jsx         # Thanh điều hướng Dashboard tùy biến responsive
+│   │   └── PrivateRoute.jsx    # Lớp bảo vệ định tuyến, giới hạn nghiêm ngặt chỉ cấp quyền 'organizer'
+│   ├── store/
+│   │   └── useAuthStore.js     # Zustand Store lưu trữ mã xác thực và thông tin phiên làm việc của Organizer
+│   ├── styles/
+│   │   └── tokens.css          # Token màu sắc cấu hình quy chuẩn hệ thống Design System
+│   ├── pages/                  # Các màn hình quản trị (Dashboard, Create Event, Manage Registration & Waitlist)
+│   ├── App.jsx
+│   └── main.jsx
+├── tailwind.config.js          # Đồng bộ bảng màu tokens.css vào Tailwind Utility
+└── vite.config.js
