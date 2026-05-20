@@ -30,12 +30,17 @@ const LoginPage = () => {
     try {
       const response = await api.post('/organizer/login', {
         ...formData,
+        // Backend dùng role này để chặn đăng nhập nhầm cổng.
         required_role: 'organizer',
       });
       const { user, token } = response.data;
 
+      if (!token) {
+        setMessage('Authentication failure: token not provided by server.');
+        return;
+      }
+
       setAuth(user, token);
-      localStorage.setItem('token', token);
       navigate('/dashboard');
     } catch (error) {
       if (error.response?.status === 422) {

@@ -1,29 +1,25 @@
 import api from './api';
 
-const normalizeStatus = (status) => {
-  if (!status) {
-    return 'Draft';
-  }
-
-  return status.charAt(0).toUpperCase() + status.slice(1);
-};
-
-const normalizeEvent = (event) => ({
-  id: event.id,
-  name: event.title || event.name || 'Untitled event',
-  date: event.start_time || event.date,
-  status: normalizeStatus(event.status),
-  registrations: event.registrations_count || event.registrations || 0,
-  capacity: event.capacity || 0,
-});
-
 export const getOrganizerEvents = async () => {
   const response = await api.get('/organizer/events');
-  const events = Array.isArray(response.data) ? response.data : response.data?.data || [];
 
-  return events.map(normalizeEvent);
+  return response.data?.events || response.data?.data || response.data || [];
+};
+
+export const createOrganizerEvent = async (payload) => {
+  const response = await api.post('/organizer/events', payload);
+
+  return response.data;
+};
+
+export const updateOrganizerEventStatus = async (eventId, status) => {
+  const response = await api.patch(`/organizer/events/${eventId}/status`, { status });
+
+  return response.data;
 };
 
 export const deleteOrganizerEvent = async (eventId) => {
-  return { deletedId: eventId };
+  const response = await api.delete(`/organizer/events/${eventId}`);
+
+  return response.data;
 };

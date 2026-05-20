@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CalendarDays, Edit3, Plus, Trash2, Users } from 'lucide-react';
-import api from '../services/api';
+import { CalendarDays, Plus, Trash2, Users } from 'lucide-react';
+import {
+  deleteOrganizerEvent,
+  getOrganizerEvents,
+  updateOrganizerEventStatus,
+} from '../services/eventService';
 
 const formatEventDate = (date) => {
   if (!date) return 'N/A';
@@ -15,6 +19,17 @@ const statusClasses = {
   ended: 'bg-gray-100 text-gray-600',
 };
 
+const statusActions = {
+  draft: [
+    { label: 'Publish', status: 'published' },
+    { label: 'Cancel', status: 'cancelled' },
+  ],
+  published: [
+    { label: 'End', status: 'ended' },
+    { label: 'Cancel', status: 'cancelled' },
+  ],
+};
+
 const DashboardPage = () => {
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
@@ -25,8 +40,9 @@ const DashboardPage = () => {
     const loadEvents = async () => {
       try {
         setIsLoading(true);
-        const response = await api.get('/organizer/events');
-        setEvents(response.data.events || response.data || []);
+        const data = await getOrganizerEvents();
+
+        setEvents(data);
       } catch (error) {
         setMessage(error.response?.data?.message || 'Unable to load your managed events.');
       } finally {
@@ -47,11 +63,21 @@ const DashboardPage = () => {
   const handleDelete = async (eventId) => {
     if (window.confirm('Are you sure you want to delete this event?')) {
       try {
-        await api.delete(`/events/${eventId}`);
+        await deleteOrganizerEvent(eventId);
         setEvents((curr) => curr.filter((e) => e.id !== eventId));
       } catch (error) {
-        alert('Failed to delete the event. Please try again.');
+        alert(error.response?.data?.message || 'Failed to delete the event. Please try again.');
       }
+    }
+  };
+
+  const handleStatusChange = async (eventId, status) => {
+    try {
+      const data = await updateOrganizerEventStatus(eventId, status);
+
+      setEvents((current) => current.map((event) => (event.id === eventId ? data.event : event)));
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to update event status.');
     }
   };
 
@@ -67,7 +93,7 @@ const DashboardPage = () => {
           
           <button
             type="button"
-            onClick={() => navigate('/create-event')} // ĐÃ SỬA: Thêm dấu / và chữ organizer
+            onClick={() => navigate('/create-event')}
             className="flex h-12 items-center justify-center gap-2 rounded-xl bg-orange-300 px-10 text-base font-semibold text-black transition hover:bg-orange-400"
           >
             <Plus className="h-5 w-5" />
@@ -137,9 +163,16 @@ const DashboardPage = () => {
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2">
-                        <button onClick={() => navigate(`/edit-event/${event.id}`)} className="flex items-center gap-1 rounded-md border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-700 hover:border-[#A02749] hover:text-[#A02749]">
-                          <Edit3 className="h-3.5 w-3.5" /> Edit
-                        </button>
+                        {(statusActions[event.status] || []).map((action) => (
+                          <button
+                            key={action.status}
+                            type="button"
+                            onClick={() => handleStatusChange(event.id, action.status)}
+                            className="rounded-md border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-700 hover:border-[#A02749] hover:text-[#A02749]"
+                          >
+                            {action.label}
+                          </button>
+                        ))}
                         <button onClick={() => handleDelete(event.id)} className="rounded-md border border-red-100 p-1.5 text-red-400 hover:border-red-200 hover:bg-red-50 hover:text-red-600">
                           <Trash2 className="h-4 w-4" />
                         </button>

@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { ArrowRight, CalendarDays, Lock, Mail, ShieldCheck, User } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import { useAuthStore } from '../store/authStore';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const setAuth = useAuthStore((state) => state.setAuth);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,12 +27,8 @@ const RegisterPage = () => {
     setMessage('');
 
     try {
-      const response = await api.post('/organizer/register', formData);
-      const { user, token } = response.data;
-
-      setAuth(user, token);
-      localStorage.setItem('token', token);
-      navigate('/login');
+      await api.post('/organizer/register', formData);
+      navigate('/organizer/login');
     } catch (error) {
       if (error.response?.status === 422) {
         setErrors(error.response.data.errors || {});

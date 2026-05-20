@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { CalendarDays, LogOut, User } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 
@@ -10,29 +9,31 @@ const MainLayout = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/'); // ĐÃ SỬA: Thêm /organizer/ vào trước
+    navigate('/organizer/login');
   };
+
+  const navLinkClass = ({ isActive }) =>
+    `text-sm transition hover:text-[#A02749] ${
+      isActive ? 'border-b-2 border-[#A02749] pb-1 font-semibold text-[#A02749]' : 'text-gray-600'
+    }`;
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans text-slate-950">
       <nav className="sticky top-0 z-50 flex flex-col gap-4 border-b border-gray-200 bg-white px-6 py-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
-        
-        {/* ĐÃ SỬA: Link logo về đúng trang dashboard của organizer */}
-        <Link to="/organizer/dashboard" className="flex items-center gap-2">
+        <Link to="/dashboard" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#A02749]">
             <CalendarDays className="h-5 w-5 text-white" />
           </div>
           <span className="text-base font-bold text-[#A02749]">EventHub</span>
         </Link>
 
-        {/* ĐÃ SỬA: Link menu có đầy đủ tiền tố /organizer/ */}
-        <div className="flex items-center gap-8 text-sm">
-          <Link className="text-gray-600 hover:text-[#A02749]" to="/dashboard">
-            Browse Events
-          </Link>
-          <Link className="border-b-2 border-[#A02749] pb-1 font-semibold text-[#A02749]" to="/dashboard">
+        <div className="flex items-center gap-8">
+          <NavLink className={navLinkClass} to="/dashboard">
             My Dashboard
-          </Link>
+          </NavLink>
+          <NavLink className={navLinkClass} to="/create-event">
+            Create Event
+          </NavLink>
         </div>
 
         <div className="flex items-center gap-4">
