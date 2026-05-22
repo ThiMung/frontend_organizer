@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import CreateEventPage from './pages/CreateEventPage';
+import EditEventPage from './pages/EditEventPage';
 import MainLayout from './components/MainLayout';
 import PrivateRoute from './components/PrivateRoute';
 
@@ -19,6 +20,7 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/create-event" element={<CreateEventPage />} />
+            <Route path="/events/:eventId/edit" element={<EditEventPage />} />
           </Route>
         </Route>
 

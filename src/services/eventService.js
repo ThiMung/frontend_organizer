@@ -12,6 +12,18 @@ export const createOrganizerEvent = async (payload) => {
   return response.data;
 };
 
+export const getOrganizerEvent = async (eventId) => {
+  const response = await api.get(`/organizer/events/${eventId}`);
+
+  return response.data?.event || response.data?.data || response.data;
+};
+
+export const updateOrganizerEvent = async (eventId, payload) => {
+  const response = await api.put(`/organizer/events/${eventId}`, payload);
+
+  return response.data;
+};
+
 export const updateOrganizerEventStatus = async (eventId, status) => {
   const response = await api.patch(`/organizer/events/${eventId}/status`, { status });
 

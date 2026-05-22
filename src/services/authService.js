@@ -28,7 +28,7 @@ export const authService = {
 		// Gọi API logout nếu có (nếu backend hỗ trợ), sau đó xóa trạng thái đăng nhập
 		try {
 			await api.post('/logout');
-		} catch (e) {
+		} catch {
 			// Có thể lỗi do token hết hạn, vẫn xóa local
 		}
 		useAuthStore.getState().logout();
