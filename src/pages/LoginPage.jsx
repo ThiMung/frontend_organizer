@@ -34,9 +34,14 @@ const LoginPage = () => {
       });
       const { user, token } = response.data;
 
+      if (!token) {
+        setMessage('Authentication failure: token not provided by server.');
+        return;
+      }
+
       setAuth(user, token);
-      localStorage.setItem('token', token);
-      navigate('/');
+      // localStorage.setItem('token', token);
+      navigate('/dashboard');
     } catch (error) {
       if (error.response?.status === 422) {
         setErrors(error.response.data.errors || {});

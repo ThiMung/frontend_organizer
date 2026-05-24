@@ -11,9 +11,25 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/register" replace />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/" element={<Navigate to="/organizer/login" replace />} />
+        <Route path="/organizer/login" element={<LoginPage />} />
+        <Route path="/organizer/register" element={<RegisterPage />} />
+
+        <Route element={<PrivateRoute />}>
+          <Route element={<MainLayout />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/create-event" element={<CreateEventPage />} />
+          </Route>
+        </Route>
+
+        <Route
+          path="*"
+          element={
+            <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-500 font-semibold">
+              Trang quản trị không tồn tại hoặc bạn nhập sai đường dẫn.
+            </div>
+          }
+        />
       </Routes>
     </Router>
   );
