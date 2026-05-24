@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CalendarDays, Lock, Mail } from 'lucide-react';
+import { ArrowRight, CalendarDays, Lock, Mail } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { useAuthStore } from '../store/authStore';
@@ -30,23 +30,18 @@ const LoginPage = () => {
     try {
       const response = await api.post('/organizer/login', {
         ...formData,
-        // Backend dùng role này để chặn đăng nhập nhầm cổng.
         required_role: 'organizer',
       });
       const { user, token } = response.data;
 
-      if (!token) {
-        setMessage('Authentication failure: token not provided by server.');
-        return;
-      }
-
       setAuth(user, token);
-      navigate('/dashboard');
+      localStorage.setItem('token', token);
+      navigate('/');
     } catch (error) {
       if (error.response?.status === 422) {
         setErrors(error.response.data.errors || {});
       } else {
-        setMessage(error.response?.data?.message || error.message || 'Sign in failed. Please try again.');
+        setMessage(error.response?.data?.message || error.message || 'Login failed. Please try again.');
       }
     } finally {
       setIsLoading(false);
@@ -54,69 +49,65 @@ const LoginPage = () => {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 px-4 py-7 font-sans text-slate-900 sm:px-7">
-      <p className="mb-2 text-xs font-semibold text-gray-300">Sign in</p>
-      <section className="flex min-h-[calc(100vh-5rem)] items-center justify-center bg-white px-4 py-10">
-        <div className="w-full max-w-[468px] rounded-md border border-gray-300 bg-[#FAF4F4] px-8 py-8 shadow-sm sm:px-16 sm:py-10">
-          <header className="mb-8 flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-[#A02749]">
-              <CalendarDays className="h-7 w-7 text-white" aria-hidden="true" />
+    <main className="min-h-screen bg-slate-50 px-4 py-8 font-sans text-slate-800 sm:px-6">
+      <section className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-[480px] items-center justify-center">
+        <div className="w-full rounded-[2rem] border border-teal-100 bg-[#EFFAF8] p-8 shadow-sm sm:p-10">
+          <header className="mb-10 flex flex-col items-center text-center">
+            <div className="mb-5 rounded-2xl bg-[#0F766E] p-4 shadow-lg shadow-teal-900/20">
+              <CalendarDays className="h-8 w-8 text-white" aria-hidden="true" />
             </div>
-            <span className="text-xl font-bold text-[#A02749]">EventHub</span>
+            <h1 className="text-3xl font-black tracking-normal text-gray-950">EventHub</h1>
+            <div className="mt-2 flex items-center gap-2">
+              <span className="h-px w-8 bg-gray-300" />
+              <p className="text-xs font-bold uppercase tracking-widest text-gray-500">Organizer Portal</p>
+              <span className="h-px w-8 bg-gray-300" />
+            </div>
+            <p className="mt-3 text-sm leading-relaxed text-gray-500">
+              Sign in to manage published events, schedules, and registrations.
+            </p>
           </header>
 
-          <div className="mb-3">
-            <h1 className="text-[22px] font-bold leading-tight tracking-normal text-black">Welcome Back</h1>
-            <p className="mt-1 text-sm text-stone-500">Sign in to your account to access your dashboard</p>
-          </div>
-
           <form className="space-y-5" onSubmit={handleSubmit}>
-            <div className="space-y-2">
-              <label className="block text-lg leading-none text-black" htmlFor="email">
+            <div className="space-y-1.5">
+              <label className="ml-1 text-xs font-bold uppercase tracking-wider text-gray-600" htmlFor="email">
                 Email Address
               </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-600" />
+              <div className="group relative">
+                <Mail className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-[#0F766E]" />
                 <input
                   id="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="your@example.com"
-                  className="h-8 w-full rounded-md border border-stone-400 bg-white pl-9 pr-3 text-sm text-stone-800 outline-none transition focus:border-[#A02749] focus:ring-2 focus:ring-[#A02749]/15"
+                  placeholder="organizer@company.com"
+                  className="w-full rounded-xl border border-teal-100 bg-white py-3.5 pl-12 pr-4 outline-none transition-all placeholder:text-gray-300 focus:border-[#0F766E] focus:ring-4 focus:ring-[#0F766E]/10"
                   value={formData.email}
                   onChange={(event) => updateField('email', event.target.value)}
                 />
               </div>
-              {errors.email && <p className="text-xs font-medium text-red-600">{errors.email[0]}</p>}
+              {errors.email && <p className="text-xs font-medium italic text-red-500">*{errors.email[0]}</p>}
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-lg leading-none text-black" htmlFor="password">
+            <div className="space-y-1.5">
+              <label className="ml-1 text-xs font-bold uppercase tracking-wider text-gray-600" htmlFor="password">
                 Password
               </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-600" />
+              <div className="group relative">
+                <Lock className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-[#0F766E]" />
                 <input
                   id="password"
                   type="password"
                   autoComplete="current-password"
-                  placeholder="••••"
-                  className="h-8 w-full rounded-md border border-stone-400 bg-white pl-9 pr-3 text-sm text-stone-800 outline-none transition focus:border-[#A02749] focus:ring-2 focus:ring-[#A02749]/15"
+                  placeholder="Enter your password"
+                  className="w-full rounded-xl border border-teal-100 bg-white py-3.5 pl-12 pr-4 outline-none transition-all placeholder:text-gray-300 focus:border-[#0F766E] focus:ring-4 focus:ring-[#0F766E]/10"
                   value={formData.password}
                   onChange={(event) => updateField('password', event.target.value)}
                 />
               </div>
-              {errors.password && <p className="text-xs font-medium text-red-600">{errors.password[0]}</p>}
-            </div>
-
-            <div className="flex justify-end">
-              <button type="button" className="text-sm font-medium text-[#A02749] hover:underline">
-                Forgot password?
-              </button>
+              {errors.password && <p className="text-xs font-medium italic text-red-500">*{errors.password[0]}</p>}
             </div>
 
             {message && (
-              <div className="rounded-md border border-red-100 bg-red-50 px-3 py-2 text-sm font-medium text-red-600">
+              <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-medium text-red-600">
                 {message}
               </div>
             )}
@@ -124,24 +115,28 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="flex h-11 w-full items-center justify-center rounded-md bg-[#A02749] text-base font-medium text-white transition hover:bg-[#861d3d] disabled:cursor-not-allowed disabled:opacity-70"
+              className="mt-6 flex w-full items-center justify-center gap-3 rounded-xl bg-[#0F766E] py-4 text-base font-bold text-white shadow-lg shadow-teal-900/15 transition-all hover:bg-[#115E59] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isLoading ? (
-                <span className="flex items-center gap-2">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />
-                  Signing in...
-                </span>
+                <>
+                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/35 border-t-white" />
+                  Processing...
+                </>
               ) : (
-                'Sign In'
+                <>
+                  Sign In <ArrowRight className="h-5 w-5" />
+                </>
               )}
             </button>
           </form>
 
-          <footer className="mt-4 text-center text-sm text-stone-400">
-            Don&apos;t have an account?{' '}
-            <Link className="font-medium text-[#A02749] hover:underline" to="/organizer/register">
-              Sign up
-            </Link>
+          <footer className="mt-10 border-t border-gray-200 pt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Don&apos;t have an organizer account?{' '}
+              <Link className="font-extrabold text-[#0F766E] underline-offset-4 hover:underline" to="/register">
+                Sign Up
+              </Link>
+            </p>
           </footer>
         </div>
       </section>

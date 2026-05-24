@@ -41,11 +41,11 @@ const RegisterPage = () => {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-8 font-sans text-slate-800 sm:px-6">
+    <main className="min-h-screen bg-slate-50 px-4 py-8 font-sans text-slate-800 sm:px-6">
       <section className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-[480px] items-center justify-center">
-        <div className="w-full rounded-[2rem] border border-gray-100 bg-[#FAF4F4] p-8 shadow-sm sm:p-10">
+        <div className="w-full rounded-[2rem] border border-teal-100 bg-[#EFFAF8] p-8 shadow-sm sm:p-10">
           <header className="mb-10 flex flex-col items-center text-center">
-            <div className="mb-5 rounded-2xl bg-[#800020] p-4 shadow-lg shadow-red-900/20">
+            <div className="mb-5 rounded-2xl bg-[#0F766E] p-4 shadow-lg shadow-teal-900/20">
               <CalendarDays className="h-8 w-8 text-white" aria-hidden="true" />
             </div>
             <h1 className="text-3xl font-black tracking-normal text-gray-950">EventHub</h1>
@@ -65,13 +65,13 @@ const RegisterPage = () => {
                 Organizer Name
               </label>
               <div className="group relative">
-                <User className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-[#800020]" />
+                <User className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-[#0F766E]" />
                 <input
                   id="name"
                   type="text"
                   autoComplete="name"
                   placeholder="e.g. Phuc Khue Events"
-                  className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-12 pr-4 outline-none transition-all placeholder:text-gray-300 focus:border-[#800020] focus:ring-4 focus:ring-[#800020]/5"
+                  className="w-full rounded-xl border border-teal-100 bg-white py-3.5 pl-12 pr-4 outline-none transition-all placeholder:text-gray-300 focus:border-[#0F766E] focus:ring-4 focus:ring-[#0F766E]/10"
                   value={formData.name}
                   onChange={(event) => updateField('name', event.target.value)}
                 />
@@ -84,13 +84,13 @@ const RegisterPage = () => {
                 Email Address
               </label>
               <div className="group relative">
-                <Mail className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-[#800020]" />
+                <Mail className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-[#0F766E]" />
                 <input
                   id="email"
                   type="email"
                   autoComplete="email"
                   placeholder="organizer@company.com"
-                  className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-12 pr-4 outline-none transition-all placeholder:text-gray-300 focus:border-[#800020] focus:ring-4 focus:ring-[#800020]/5"
+                  className="w-full rounded-xl border border-teal-100 bg-white py-3.5 pl-12 pr-4 outline-none transition-all placeholder:text-gray-300 focus:border-[#0F766E] focus:ring-4 focus:ring-[#0F766E]/10"
                   value={formData.email}
                   onChange={(event) => updateField('email', event.target.value)}
                 />
@@ -103,13 +103,13 @@ const RegisterPage = () => {
                 Password
               </label>
               <div className="group relative">
-                <Lock className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-[#800020]" />
+                <Lock className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-[#0F766E]" />
                 <input
                   id="password"
                   type="password"
                   autoComplete="new-password"
                   placeholder="Min. 8 characters"
-                  className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-12 pr-4 outline-none transition-all placeholder:text-gray-300 focus:border-[#800020] focus:ring-4 focus:ring-[#800020]/5"
+                  className="w-full rounded-xl border border-teal-100 bg-white py-3.5 pl-12 pr-4 outline-none transition-all placeholder:text-gray-300 focus:border-[#0F766E] focus:ring-4 focus:ring-[#0F766E]/10"
                   value={formData.password}
                   onChange={(event) => updateField('password', event.target.value)}
                 />
@@ -133,7 +133,7 @@ const RegisterPage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="mt-4 flex w-full items-center justify-center gap-3 rounded-xl bg-[#800020] py-4 text-base font-bold text-white shadow-lg shadow-red-900/10 transition-all hover:bg-[#600018] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
+              className="mt-4 flex w-full items-center justify-center gap-3 rounded-xl bg-[#0F766E] py-4 text-base font-bold text-white shadow-lg shadow-teal-900/15 transition-all hover:bg-[#115E59] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isLoading ? (
                 <>
@@ -151,7 +151,7 @@ const RegisterPage = () => {
           <footer className="mt-10 border-t border-gray-200 pt-6 text-center">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
-              <Link className="font-extrabold text-[#800020] underline-offset-4 hover:underline" to="/organizer/login">
+              <Link className="font-extrabold text-[#0F766E] underline-offset-4 hover:underline" to="/login">
                 Sign In
               </Link>
             </p>
