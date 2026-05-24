@@ -19,6 +19,7 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/create-event" element={<CreateEventPage />} />
+            <Route path="/events/:eventId/edit" element={<EditEventPage />} />
           </Route>
         </Route>
 

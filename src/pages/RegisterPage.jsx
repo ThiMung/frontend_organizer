@@ -151,7 +151,7 @@ const RegisterPage = () => {
           <footer className="mt-10 border-t border-gray-200 pt-6 text-center">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
-              <Link className="font-extrabold text-[#0F766E] underline-offset-4 hover:underline" to="/login">
+              <Link className="font-extrabold text-[#0F766E] underline-offset-4 hover:underline" to="/organizer/login">
                 Sign In
               </Link>
             </p>

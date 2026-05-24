@@ -138,7 +138,7 @@ const LoginPage = () => {
           <footer className="mt-10 border-t border-gray-200 pt-6 text-center">
             <p className="text-sm text-gray-600">
               Don&apos;t have an organizer account?{' '}
-              <Link className="font-extrabold text-[#0F766E] underline-offset-4 hover:underline" to="/register">
+              <Link className="font-extrabold text-[#0F766E] underline-offset-4 hover:underline" to="/organizer/register">
                 Sign Up
               </Link>
             </p>
