@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CalendarDays, Pencil, Plus, Trash2, Users } from 'lucide-react';
+import { CalendarDays, Eye, Pencil, Plus, Trash2, Users } from 'lucide-react';
 import {
   deleteOrganizerEvent,
   getOrganizerEvents,
@@ -173,6 +173,14 @@ const DashboardPage = () => {
                             {action.label}
                           </button>
                         ))}
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/events/${event.id}`)}
+                          className="rounded-md border border-gray-200 p-1.5 text-gray-500 hover:border-blue-500 hover:bg-blue-50 hover:text-blue-600 transition"
+                          title="View event details"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </button>
                         <button
                           type="button"
                           onClick={() => navigate(`/events/${event.id}/edit`)}
