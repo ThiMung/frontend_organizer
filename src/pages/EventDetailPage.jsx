@@ -178,7 +178,7 @@ const EventDetailPage = () => {
 
         return (
             <div className="max-w-6xl mx-auto px-4 py-8 bg-white text-primary">
-                <Link to="/" className="text-primary hover:underline text-[15px] mb-6 inline-flex items-center gap-2 font-semibold">
+                <Link to="/dashboard" className="text-primary hover:underline text-[15px] mb-6 inline-flex items-center gap-2 font-semibold">
                     <span className="text-xl">&#8592;</span> Back to Events
                 </Link>
                 <div className="flex flex-col md:flex-row md:gap-8">
